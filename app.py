@@ -7,16 +7,16 @@ import joblib
 st.set_page_config(
     page_title="Prediktor Spesies Penguin",
     page_icon="🐧",
-    layout="centered"
+    layout="wide"
 )
 
 # --- 1. Muat Model dan Objek Pra-pemrosesan yang Telah Disimpan ---
 # Pastikan file-file .pkl ada di direktori yang sama
 try:
-    model = joblib.load('penguin_classifier_model.pkl')
-    scaler = joblib.load('penguin_scaler.pkl')
-    le_species = joblib.load('penguin_le_species.pkl')
-    le_sex = joblib.load('penguin_le_sex.pkl')
+    model = joblib.load('model/penguin_classifier_model.pkl')
+    scaler = joblib.load('model/penguin_scaler.pkl')
+    le_species = joblib.load('model/penguin_le_species.pkl')
+    le_sex = joblib.load('model/penguin_le_sex.pkl')
     st.success("Model dan objek pra-pemrosesan berhasil dimuat!")
 except FileNotFoundError:
     st.error("Error: Salah satu file model/scaler/encoder tidak ditemukan. Pastikan Anda telah menjalankan skrip ML untuk menyimpannya.")
@@ -120,10 +120,38 @@ st.header("📚 Tentang Dataset Penguin")
 st.markdown(
     """
     Dataset ini berisi pengukuran morfologis untuk tiga spesies penguin yang berbeda:
-    * **Adelie Penguin**
-    * **Chinstrap Penguin**
-    * **Gentoo Penguin**
+    """
+)
 
+# Menggunakan kolom untuk menampilkan gambar dan deskripsi berdampingan
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.subheader("Adelie Penguin")
+    try:
+        st.image("images/adelie.jpg", caption="Adelie Penguin", width=200)
+    except FileNotFoundError:
+        st.warning("Gambar adelie.jpg tidak ditemukan.")
+    st.markdown("Penguin Adelie adalah spesies yang paling umum dan tersebar luas, dikenal dengan cincin putih di sekitar mata.")
+
+with col2:
+    st.subheader("Chinstrap Penguin")
+    try:
+        st.image("images/chinstrap.jpg", caption="Chinstrap Penguin", width=200)
+    except FileNotFoundError:
+        st.warning("Gambar chinstrap2.jpg tidak ditemukan.")
+    st.markdown("Penguin Chinstrap mudah dikenali dari garis tipis hitam di bawah dagunya yang menyerupai tali dagu.")
+
+with col3:
+    st.subheader("Gentoo Penguin")
+    try:
+        st.image("images/gentoo.jpg", caption="Gentoo Penguin", width=200)
+    except FileNotFoundError:
+        st.warning("Gambar gentoo.jpg tidak ditemukan.")
+    st.markdown("Penguin Gentoo adalah spesies penguin terbesar di Kepulauan Palmer, dengan bintik putih menonjol di atas mata.")
+
+st.markdown(
+    """
     Data ini dikumpulkan dari Kepulauan Palmer, Antartika. Fitur-fitur utama yang digunakan untuk prediksi meliputi:
     * **Panjang Paruh (Culmen Length)**: Panjang paruh penguin dari pangkal hingga ujung.
     * **Kedalaman Paruh (Culmen Depth)**: Kedalaman paruh penguin di bagian terlebar.
@@ -134,7 +162,6 @@ st.markdown(
     Dataset ini sangat populer di dunia Machine Learning untuk tugas **klasifikasi multi-kelas** karena pola yang jelas antar spesies, menjadikannya ideal untuk pembelajaran dan demonstrasi.
     """
 )
-
-st.write("---") # Garis pemisah
+st.write("---")
 st.markdown("Dibuat oleh: **Wahyu Andika Rahadi**")
 st.caption("Aplikasi ini dibuat untuk tujuan demonstrasi dan pembelajaran Machine Learning.")
